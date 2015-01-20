@@ -1,6 +1,6 @@
 {
   "name": "hammock-request",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Make requests use the hammock HTTP mocks",
   "keywords": [],
   "author": "Raynos <raynos2@gmail.com>",
