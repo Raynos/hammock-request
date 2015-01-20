@@ -11,7 +11,7 @@ hammockRequest.jar = function jar() {
 
 module.exports = hammockRequest;
 
-/*eslint max-statements: [2, 20]*/
+/*eslint max-statements: [2, 25]*/
 function hammockRequest(handler, opts, cb) {
     var mockReq = HammockRequest(opts);
     var mockRes = HammockResponse(onResponse);
@@ -39,7 +39,13 @@ function hammockRequest(handler, opts, cb) {
         }
     }
 
-    handler(mockReq, mockRes);
+    if (typeof handler === 'function') {
+        handler(mockReq, mockRes);
+    } else if (handler && typeof handler.emit === 'function') {
+        handler.emit('request', mockReq, mockRes);
+    } else {
+        throw new Error('invalid handler function');
+    }
 
     if ('json' in opts && opts.json !== true) {
         mockReq.write(JSON.stringify(opts.json));
