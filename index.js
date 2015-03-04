@@ -11,10 +11,20 @@ hammockRequest.jar = function jar() {
 
 module.exports = hammockRequest;
 
-/*eslint max-statements: [2, 25]*/
+/*eslint max-statements: [2, 29]*/
 function hammockRequest(handler, opts, cb) {
     var mockReq = HammockRequest(opts);
     var mockRes = HammockResponse(onResponse);
+
+    if (opts.json) {
+        if (typeof opts.json === 'boolean') {
+            mockReq.body = JSON.stringify(opts.body);
+        } else {
+            mockReq.body = JSON.stringify(opts.json);
+        }
+    } else {
+        mockReq.body = opts.body;
+    }
 
     if (opts.url.indexOf('http:') !== 0 &&
         opts.url.indexOf('https:') !== 0

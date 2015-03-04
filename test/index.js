@@ -51,3 +51,81 @@ test('can make req (server)', function t(assert) {
         assert.end();
     });
 });
+
+test('can pass body as object if json set to true', function t(assert) {
+    var data = {
+        'foo': 'bar'
+    };
+
+    function myHandler(req, resp) {
+        assert.deepEqual(req.body, JSON.stringify(data));
+        resp.end(JSON.stringify('hello world'));
+    }
+
+    hammockRequest(myHandler, {
+        url: '/foo',
+        json: true,
+        body: data
+    }, function onResp(err, resp) {
+        assert.ifError(err);
+        assert.end();
+    });
+});
+
+test('can pass json as object', function t(assert) {
+    var data = {
+        'foo': 'bar'
+    };
+
+    function myHandler(req, resp) {
+        assert.deepEqual(req.body, JSON.stringify(data));
+        resp.end(JSON.stringify('hello world'));
+    }
+
+    hammockRequest(myHandler, {
+        url: '/foo',
+        json: data
+    }, function onResp(err, resp) {
+        assert.ifError(err);
+        assert.end();
+    });
+});
+
+test('can pass body as string', function t(assert) {
+    var data = {
+        'foo': 'bar'
+    };
+
+    function myHandler(req, resp) {
+        assert.deepEqual(req.body, JSON.stringify(data));
+        resp.end(JSON.stringify('hello world'));
+    }
+
+    hammockRequest(myHandler, {
+        url: '/foo',
+        body: JSON.stringify(data)
+    }, function onResp(err, resp) {
+        assert.ifError(err);
+        assert.end();
+    });
+});
+
+test('can pass json false', function t(assert) {
+    var data = {
+        'foo': 'bar'
+    };
+
+    function myHandler(req, resp) {
+        assert.deepEqual(req.body, JSON.stringify(data));
+        resp.end(JSON.stringify('hello world'));
+    }
+
+    hammockRequest(myHandler, {
+        url: '/foo',
+        body: JSON.stringify(data),
+        json: false
+    }, function onResp(err, resp) {
+        assert.ifError(err);
+        assert.end();
+    });
+});
