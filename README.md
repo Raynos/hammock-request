@@ -22,7 +22,9 @@ var myHandler = function (req, resp) {
 hammockRequest(myHandler, {
     url: '/foo',
     json: { 'foo': 'bar' }
-})
+}, function (err, resp){
+    // handle
+});
 ```
 
 ## Docs
